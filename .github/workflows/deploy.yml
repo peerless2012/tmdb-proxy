@@ -1,0 +1,28 @@
+name: 部署到 Cloudflare Workers
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: 检出代码
+        uses: actions/checkout@v4
+
+      - name: 设置 Node.js 环境
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: 安装 Wrangler
+        run: npm install -g wrangler
+
+      - name: 部署到 Cloudflare Workers
+        run: |
+          wrangler deploy --var TMDB_API_KEY:"${{ secrets.TMDB_API_KEY }}"
+        env:
+          CLOUDFLARE_API_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN }}
