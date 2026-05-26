@@ -3,17 +3,11 @@ name: 部署到 Cloudflare Workers
 on:
   push:
     branches: [ main ]
-    paths:
-      - 'worker.js'
-      - 'wrangler.toml'
-      - 'package.json'
-      - '.github/workflows/deploy.yml'
 
 jobs:
-  deploy:  # job ID 必须使用英文
+  deploy:
     runs-on: ubuntu-latest
-    if: github.event_name == 'push' || (github.event_name == 'pull_request' && github.event.action != 'closed')
-    
+
     steps:
       - name: 检出代码
         uses: actions/checkout@v4
