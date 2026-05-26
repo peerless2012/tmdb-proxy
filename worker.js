@@ -185,7 +185,7 @@ async function handleApiProxy(request, url, env, ctx, corsHeaders) {
 }
 
 // 请求上游，遇到 429 自动重试
-async function fetchWithRetry(url, options, retries = 2) {
+async function fetchWithRetry(url, options, retries = 3) {
   for (let i = 0; i <= retries; i++) {
     const response = await fetch(url, options)
     if (response.status === 429 && i < retries) {
